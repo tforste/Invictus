@@ -3,12 +3,14 @@ using System.Collections;
 
 public class AIFollow : MonoBehaviour {
 
-    private Transform target;
-
+    //Public Settings for the Monster
     public float moveSpeed = 20;
     public float rotationSpeed = 5;
     public float playerDetection = 50;
+    public float attackRange = 8;
 
+    //Private Variables for this script
+    private Transform target;
     private CharacterController enemyControl;
     private float lastDist;
     private Vector3 dir;
@@ -31,7 +33,7 @@ public class AIFollow : MonoBehaviour {
         lastDist = Vector3.Distance(transform.position, target.position);
 
 
-        if(lastDist <= playerDetection)
+        if(lastDist <= playerDetection && lastDist >= attackRange)
         {
             dir = target.position - transform.position;
             dir.y = 0; //keep only the horizontal direction
@@ -47,7 +49,7 @@ public class AIFollow : MonoBehaviour {
             isWalking = false;
         }
 
-        if(lastDist < 8)
+        if(lastDist <= attackRange)
         {
             animation.CrossFade("attack");
         }
